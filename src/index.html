@@ -18,10 +18,19 @@
     .ad {
       text-align: center;
       border: 1px solid red;
-      padding: 4px;
+    }
+    .fixedheader {
+        padding-top: 90px;
+    }
+    .fixedheader #header-ad{
+        position: fixed;
+        top: 0;
+        width: 100%;
+        left: 0;
     }
   </style>
   <script async="async" src="https://www.googletagservices.com/tag/js/gpt.js"></script>
+  <script src="/js/adunit-loader.js"></script>
   <script>
     var googletag = googletag || {};
     googletag.cmd = googletag.cmd || [];
@@ -29,7 +38,6 @@
     googletag.cmd.push(() => {
       var headerMapping = googletag.sizeMapping()
         .addSize([0, 0], [320, 50])
-        .addSize([0, 0], [300, 250])
         .addSize([1000, 0], [728, 90])
         .build();
       var slotMapping = googletag.sizeMapping()
@@ -70,16 +78,27 @@
 
       googletag.pubads().setTargeting('siteId', 'test');
       googletag.pubads().enableSingleRequest();
+      
+      googletag.pubads().addEventListener('slotRenderEnded', function(event) {
+        setTimeout(function() {
+            document.querySelector('.wrapper').className='wrapper';
+        }, 5000);
+      });
+      googletag.pubads().addEventListener('impressionViewable', function(event) {
+          setTimeout(function() {
+              document.querySelector('.wrapper').className='wrapper';
+          }, 2000);
+      });
 
       googletag.enableServices();
     });
 
   </script>
-  <script src="/js/adunit-loader.js"></script>
+  
   <script src="/js/scripts.js"></script>
 </head>
 <body>
-  <div class="wrapper">
+  <div class="wrapper fixedheader">
     <div id="header-ad" class="ad">
       <script type="text/javascript">
         googletag.cmd.push(() => {

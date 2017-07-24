@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded',function(){
     console.log('init_aul');
     var aul = init_aul();
     //console.log(aul.contentDirectChildrenSelector)
-    ul.loadViewableArea();
+    aul.loadViewableArea();
     //aul.loadAllSlots();
     var then = new Date();
     //console.log(then);
