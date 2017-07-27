@@ -80,14 +80,20 @@
       googletag.pubads().enableSingleRequest();
       
       googletag.pubads().addEventListener('slotRenderEnded', function(event) {
-        setTimeout(function() {
-            document.querySelector('.wrapper').className='wrapper';
-        }, 5000);
+        var slotElementId = event.slot.getSlotElementId();
+        if(slotElementId == 'header-ad') {
+            setTimeout(function() {
+                document.querySelector('.wrapper').className='wrapper';
+            }, 5000);
+        }
       });
       googletag.pubads().addEventListener('impressionViewable', function(event) {
-          setTimeout(function() {
-              document.querySelector('.wrapper').className='wrapper';
-          }, 2000);
+          var slotElementId = event.slot.getSlotElementId();
+          if(slotElementId == 'header-ad') {
+              setTimeout(function() {
+                  document.querySelector('.wrapper').className='wrapper';
+              }, 2000);
+          }
       });
 
       googletag.enableServices();

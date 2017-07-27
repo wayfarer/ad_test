@@ -7,12 +7,14 @@ class AdUnitLoader {
         }
         this.baseContentNodeSelector = base_content_node_selector || 'article.main';
         this.contentDirectChildrenSelector = [this.baseContentNodeSelector, '>*'].join('');
-        this.adunitPathDefault = adunit_path_default || '/18190176/AdThrive_Content_1/test';
         this.slot_cache = []
         this.loadNextSlot();
     }
     
     viewableAreaOccupied() {
+        /*
+         * Read slot cache and determine if there is a slot occupying the current viewport
+         */
         //console.log('viewableAreaOccupied');
         var viewable_y_min = window.pageYOffset;
         //console.log(viewable_y_min);
@@ -27,10 +29,11 @@ class AdUnitLoader {
         return false;
     }
     
-    loadViewableArea(adunit_path) {
+    loadViewableArea() {
         //console.log('loadViewableArea')
-        adunit_path = adunit_path || this.adunitPathDefault;
-        
+        /*
+         * Allows for lazy loading by only loading 
+         */
         var total_checks = 0;
         while(!this.viewableAreaOccupied()) {
             //console.log('loadNextSlot');
@@ -43,12 +46,19 @@ class AdUnitLoader {
     }
     
     loadAllSlots() {
+        /*
+         * Load every slot across the entire page, if needed
+         */
         for(var i=0; i<this.maxElems; i++) {
             this.loadNextSlot();
         }
     }
     
-    loadNextSlot(adunit_path) {
+    loadNextSlot() {
+        /*
+         * Load next slot depending on what has already been inserted into the page
+         * Assumes sequential insertion
+         */
         function _elem_contains_img(elem) {
             var q = elem.querySelector('img');
             if(q != null) {
@@ -81,6 +91,7 @@ class AdUnitLoader {
             } while(elem = elem.offsetParent);
             return offsetTop;
         }
+        
         var elements = document.querySelectorAll(this.contentDirectChildrenSelector);
         //console.log(elements.length);
         var element;
@@ -125,6 +136,9 @@ class AdUnitLoader {
     }
     
     loadSlot(id) {
+        /*
+         * Load one slot by id
+         */
         googletag.cmd.push(() => {
           googletag.display(id);
         });
