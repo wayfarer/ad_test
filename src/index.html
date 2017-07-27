@@ -17,9 +17,20 @@
 
     .ad {
       text-align: center;
+      border: 1px solid red;
+    }
+    .fixedheader {
+        padding-top: 90px;
+    }
+    .fixedheader #header-ad{
+        position: fixed;
+        top: 0;
+        width: 100%;
+        left: 0;
     }
   </style>
   <script async="async" src="https://www.googletagservices.com/tag/js/gpt.js"></script>
+  <script src="/js/adunit-loader.js"></script>
   <script>
     var googletag = googletag || {};
     googletag.cmd = googletag.cmd || [];
@@ -29,21 +40,71 @@
         .addSize([0, 0], [320, 50])
         .addSize([1000, 0], [728, 90])
         .build();
+      var slotMapping = googletag.sizeMapping()
+        .addSize([0, 0], [320, 50])
+        .addSize([0, 0], [300, 250])
+        .build();
 
       googletag.defineSlot('/18190176/AdThrive_Header_1/test', [[320, 50]], 'header-ad')
         .defineSizeMapping(headerMapping)
         .addService(googletag.pubads());
+      googletag.defineSlot('/18190176/AdThrive_Content_1/test', [[320, 50]], 'slot_1')
+        .defineSizeMapping(slotMapping)
+        .addService(googletag.pubads());
+      googletag.defineSlot('/18190176/AdThrive_Content_2/test', [[320, 50]], 'slot_2')
+        .defineSizeMapping(slotMapping)
+        .addService(googletag.pubads());
+      googletag.defineSlot('/18190176/AdThrive_Content_3/test', [[320, 50]], 'slot_3')
+        .defineSizeMapping(slotMapping)
+        .addService(googletag.pubads());
+      googletag.defineSlot('/18190176/AdThrive_Content_4/test', [[320, 50]], 'slot_4')
+        .defineSizeMapping(slotMapping)
+        .addService(googletag.pubads());
+      googletag.defineSlot('/18190176/AdThrive_Content_5/test', [[320, 50]], 'slot_5')
+        .defineSizeMapping(slotMapping)
+        .addService(googletag.pubads());
+      googletag.defineSlot('/18190176/AdThrive_Content_6/test', [[320, 50]], 'slot_6')
+        .defineSizeMapping(slotMapping)
+        .addService(googletag.pubads());
+      googletag.defineSlot('/18190176/AdThrive_Content_7/test', [[320, 50]], 'slot_7')
+        .defineSizeMapping(slotMapping)
+        .addService(googletag.pubads());
+      googletag.defineSlot('/18190176/AdThrive_Content_8/test', [[320, 50]], 'slot_8')
+        .defineSizeMapping(slotMapping)
+        .addService(googletag.pubads());
+      googletag.defineSlot('/18190176/AdThrive_Content_9/test', [[320, 50]], 'slot_9')
+        .defineSizeMapping(slotMapping)
+        .addService(googletag.pubads());
 
       googletag.pubads().setTargeting('siteId', 'test');
       googletag.pubads().enableSingleRequest();
+      
+      googletag.pubads().addEventListener('slotRenderEnded', function(event) {
+        var slotElementId = event.slot.getSlotElementId();
+        if(slotElementId == 'header-ad') {
+            setTimeout(function() {
+                document.querySelector('.wrapper').className='wrapper';
+            }, 5000);
+        }
+      });
+      googletag.pubads().addEventListener('impressionViewable', function(event) {
+          var slotElementId = event.slot.getSlotElementId();
+          if(slotElementId == 'header-ad') {
+              setTimeout(function() {
+                  document.querySelector('.wrapper').className='wrapper';
+              }, 2000);
+          }
+      });
 
       googletag.enableServices();
     });
 
   </script>
+  
+  <script src="/js/scripts.js"></script>
 </head>
 <body>
-  <div class="wrapper">
+  <div class="wrapper fixedheader">
     <div id="header-ad" class="ad">
       <script type="text/javascript">
         googletag.cmd.push(() => {
